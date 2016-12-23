@@ -112,7 +112,10 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": False,
                            "neutron_network_firewall": False,
                            "neutron_network_vpn": False,
-                           "cinder_backup": False})
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
 
     def test_HorizonContext_debug(self):
         self.test_config.set('debug', 'yes')
@@ -128,7 +131,10 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": False,
                            "neutron_network_firewall": False,
                            "neutron_network_vpn": False,
-                           "cinder_backup": False})
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
 
     def test_HorizonContext_theme(self):
         self.test_config.set('ubuntu-theme', False)
@@ -136,6 +142,7 @@ class TestHorizonContexts(CharmTestCase):
                           {'compress_offline': True, 'debug': False,
                            'default_role': 'Member', 'webroot': '/horizon',
                            'ubuntu_theme': False,
+                           'default_theme': None,
                            'virtualenv': None,
                            'secret': 'secret',
                            'support_profile': None,
@@ -144,7 +151,31 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": False,
                            "neutron_network_firewall": False,
                            "neutron_network_vpn": False,
-                           "cinder_backup": False})
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
+
+    def test_HorizonContext_default_theme(self):
+        self.test_config.set('ubuntu-theme', False)
+        self.test_config.set('default-theme', 'material')
+        self.assertEquals(horizon_contexts.HorizonContext()(),
+                          {'compress_offline': True, 'debug': False,
+                           'default_role': 'Member', 'webroot': '/horizon',
+                           'ubuntu_theme': False,
+                           'default_theme': 'material',
+                           'virtualenv': None,
+                           'secret': 'secret',
+                           'support_profile': None,
+                           "neutron_network_dvr": False,
+                           "neutron_network_l3ha": False,
+                           "neutron_network_lb": False,
+                           "neutron_network_firewall": False,
+                           "neutron_network_vpn": False,
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
 
     def test_HorizonContext_compression(self):
         self.test_config.set('offline-compression', 'no')
@@ -160,7 +191,10 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": False,
                            "neutron_network_firewall": False,
                            "neutron_network_vpn": False,
-                           "cinder_backup": False})
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
 
     def test_HorizonContext_role(self):
         self.test_config.set('default-role', 'foo')
@@ -176,7 +210,10 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": False,
                            "neutron_network_firewall": False,
                            "neutron_network_vpn": False,
-                           "cinder_backup": False})
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
 
     def test_HorizonContext_webroot(self):
         self.test_config.set('webroot', '/')
@@ -192,7 +229,10 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": False,
                            "neutron_network_firewall": False,
                            "neutron_network_vpn": False,
-                           "cinder_backup": False})
+                           "cinder_backup": False,
+                           "password_retrieve": False,
+                           }
+                          )
 
     def test_HorizonContext_panels(self):
         self.test_config.set('neutron-network-dvr', True)
@@ -213,7 +253,30 @@ class TestHorizonContexts(CharmTestCase):
                            "neutron_network_lb": True,
                            "neutron_network_firewall": True,
                            "neutron_network_vpn": True,
-                           "cinder_backup": True})
+                           "cinder_backup": True,
+                           "password_retrieve": False,
+                           }
+                          )
+
+    def test_HorizonContext_password_retrieve(self):
+        self.test_config.set('password-retrieve', True)
+        self.assertEquals(horizon_contexts.HorizonContext()(),
+                          {'compress_offline': True, 'debug': False,
+                           'default_role': 'Member', 'webroot': '/horizon',
+                           'ubuntu_theme': True,
+                           'default_theme': None,
+                           'virtualenv': None,
+                           'secret': 'secret',
+                           'support_profile': None,
+                           "neutron_network_dvr": False,
+                           "neutron_network_l3ha": False,
+                           "neutron_network_lb": False,
+                           "neutron_network_firewall": False,
+                           "neutron_network_vpn": False,
+                           "cinder_backup": False,
+                           "password_retrieve": True,
+                           }
+                          )
 
     def test_IdentityServiceContext_not_related(self):
         self.relation_ids.return_value = []
